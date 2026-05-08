@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BLE Controller</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="Bluetooth connection">
+        <div>
+          <h1>BLE Controller</h1>
+          <p id="supportText">Ready to scan for Bluetooth LE devices.</p>
+        </div>
+        <div class="connection-actions">
+          <button id="scanButton" class="primary">Scan</button>
+          <button id="disconnectButton" disabled>Disconnect</button>
+        </div>
+      </section>
+
+      <section class="settings-panel" aria-label="BLE settings">
+        <label>
+          Service UUID
+          <input id="serviceUuid" autocomplete="off" spellcheck="false" value="0000ffe0-0000-1000-8000-00805f9b34fb">
+        </label>
+        <label>
+          Characteristic UUID
+          <input id="characteristicUuid" autocomplete="off" spellcheck="false" value="0000ffe1-0000-1000-8000-00805f9b34fb">
+        </label>
+        <label>
+          Device name prefix
+          <input id="namePrefix" autocomplete="off" spellcheck="false" placeholder="Optional">
+        </label>
+        <label>
+          Command suffix
+          <select id="commandSuffix">
+            <option value="">None</option>
+            <option value="\n">New line</option>
+            <option value="\r\n">CRLF</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="status-strip" aria-live="polite">
+        <span id="deviceName">No device connected</span>
+        <span id="lastCommand">Last command: none</span>
+      </section>
+
+      <section class="controller-grid" aria-label="Controller">
+        <div class="joystick-area">
+          <div id="joystick" class="joystick" role="application" aria-label="Directional joystick">
+            <button class="direction up" data-command="UP" aria-label="Send up">▲</button>
+            <button class="direction left" data-command="LEFT" aria-label="Send left">◀</button>
+            <div class="stick-center" aria-hidden="true"></div>
+            <button class="direction right" data-command="RIGHT" aria-label="Send right">▶</button>
+            <button class="direction down" data-command="DOWN" aria-label="Send down">▼</button>
+          </div>
+        </div>
+
+        <div class="button-area" aria-label="Action buttons">
+          <button class="action-button" data-command="A">A</button>
+          <button class="action-button" data-command="B">B</button>
+          <button class="action-button" data-command="C">C</button>
+        </div>
+      </section>
+
+      <section class="log-panel" aria-label="Command log">
+        <div class="log-header">
+          <h2>Log</h2>
+          <button id="clearLogButton">Clear</button>
+        </div>
+        <ol id="logList"></ol>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

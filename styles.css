@@ -1,0 +1,360 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --ink: #17202a;
+  --muted: #5e6b78;
+  --line: #d9e0e7;
+  --accent: #1677c7;
+  --accent-dark: #0f5e9f;
+  --ok: #167a4a;
+  --danger: #b42318;
+  --button: #24384b;
+  --shadow: 0 14px 34px rgba(29, 41, 57, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, #edf2f7 0%, var(--bg) 38%, #e9edf2 100%);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--button);
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(23, 32, 42, 0.14);
+}
+
+button:active:not(:disabled),
+button.active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.app-shell {
+  width: min(1120px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 24px 0 32px;
+}
+
+.topbar,
+.settings-panel,
+.status-strip,
+.log-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+.topbar p {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.connection-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.connection-actions button,
+.log-header button {
+  padding: 0 18px;
+}
+
+.primary {
+  background: var(--accent);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--accent-dark);
+}
+
+.settings-panel {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+  padding: 16px;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+input,
+select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0 11px;
+  color: var(--ink);
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+  outline: 3px solid rgba(22, 119, 199, 0.24);
+  outline-offset: 2px;
+}
+
+.status-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.status-strip.connected #deviceName {
+  color: var(--ok);
+  font-weight: 800;
+}
+
+.controller-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 24px;
+  min-height: 420px;
+  padding: 24px 0;
+}
+
+.joystick-area,
+.button-area {
+  display: grid;
+  place-items: center;
+  min-height: 380px;
+}
+
+.joystick {
+  display: grid;
+  grid-template-columns: repeat(3, 88px);
+  grid-template-rows: repeat(3, 88px);
+  gap: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #dfe7ef;
+  border: 1px solid #c9d4df;
+  touch-action: none;
+}
+
+.direction {
+  width: 88px;
+  height: 88px;
+  min-height: 88px;
+  border-radius: 8px;
+  background: #2e4053;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.direction.up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.direction.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.direction.right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.direction.down {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.stick-center {
+  grid-column: 2;
+  grid-row: 2;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #c5d0db 34%, #8a99a8 100%);
+  border: 8px solid #516375;
+  box-shadow: inset 0 5px 12px rgba(23, 32, 42, 0.22);
+}
+
+.button-area {
+  grid-template-columns: repeat(3, minmax(86px, 120px));
+  gap: 18px;
+}
+
+.action-button {
+  width: clamp(86px, 12vw, 120px);
+  height: clamp(86px, 12vw, 120px);
+  min-height: 86px;
+  border-radius: 50%;
+  background: #d93f35;
+  font-size: clamp(1.5rem, 1rem + 1vw, 2.1rem);
+  font-weight: 900;
+  box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.18);
+}
+
+.action-button:nth-child(2) {
+  background: #138a63;
+}
+
+.action-button:nth-child(3) {
+  background: #b06b10;
+}
+
+.log-panel {
+  overflow: hidden;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+#logList {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 6px;
+  min-height: 96px;
+  max-height: 180px;
+  margin: 0;
+  padding: 14px 16px 16px 36px;
+  overflow: auto;
+  color: var(--muted);
+}
+
+#logList:empty::before {
+  content: "No commands sent yet.";
+  margin-left: -20px;
+}
+
+@media (max-width: 840px) {
+  .settings-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .controller-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .joystick-area,
+  .button-area {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    width: min(100% - 20px, 1120px);
+    padding-top: 10px;
+  }
+
+  .topbar,
+  .status-strip {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .connection-actions {
+    justify-content: stretch;
+  }
+
+  .connection-actions button {
+    flex: 1 1 130px;
+  }
+
+  .settings-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .joystick {
+    grid-template-columns: repeat(3, 72px);
+    grid-template-rows: repeat(3, 72px);
+    gap: 9px;
+    padding: 12px;
+  }
+
+  .direction,
+  .stick-center {
+    width: 72px;
+    height: 72px;
+    min-height: 72px;
+  }
+
+  .button-area {
+    grid-template-columns: repeat(3, minmax(72px, 1fr));
+    width: 100%;
+  }
+
+  .action-button {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+}
