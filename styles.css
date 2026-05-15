@@ -122,8 +122,9 @@ h2 {
 }
 
 .settings-panel {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 14px;
   margin-top: 16px;
   padding: 16px;
@@ -141,6 +142,7 @@ input,
 select {
   width: 100%;
   min-height: 42px;
+  min-width: 300px;
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 0 11px;

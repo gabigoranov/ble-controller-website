@@ -3,8 +3,6 @@ const scanButton = document.querySelector("#scanButton");
 const disconnectButton = document.querySelector("#disconnectButton");
 const serviceUuidInput = document.querySelector("#serviceUuid");
 const characteristicUuidInput = document.querySelector("#characteristicUuid");
-const namePrefixInput = document.querySelector("#namePrefix");
-const commandSuffixInput = document.querySelector("#commandSuffix");
 const supportText = document.querySelector("#supportText");
 const deviceName = document.querySelector("#deviceName");
 const lastCommand = document.querySelector("#lastCommand");
@@ -28,13 +26,6 @@ const encoder = new TextEncoder();
 // Removes extra spaces from the UUID input
 function normalizeUuid(value) {
   return value.trim();
-}
-
-// Converts the suffix option from the UI into real line ending characters
-function decodeSuffix(value) {
-  if (value === "\\n") return "\n";
-  if (value === "\\r\\n") return "\r\n";
-  return "";
 }
 
 // Updates the status text, connection styling, and disconnect button state
@@ -81,21 +72,12 @@ async function connect() {
 
   const { serviceUuid, characteristicUuid } = validateSettings();
 
-  // If the user entered a name prefix, search by device name.
-  // Otherwise, search by Bluetooth service UUID.
-  const namePrefix = namePrefixInput.value.trim();
-  const filters = namePrefix ? [{ namePrefix }] : [{ services: [serviceUuid] }];
-
-  // optionalServices is needed when we search by name,
-  // because the browser still needs permission to access this service
-  const optionalServices = namePrefix ? [serviceUuid] : [];
-
   setStatus("Opening Bluetooth device picker...");
 
-  // Opens the browser's Bluetooth device picker
+  // Opens the browser's Bluetooth device picker.
+  // The browser will only show devices that advertise the selected service UUID.
   bluetoothDevice = await navigator.bluetooth.requestDevice({
-    filters,
-    optionalServices
+    filters: [{ services: [serviceUuid] }]
   });
 
   // If the device disconnects, this function will clean up the UI
@@ -142,15 +124,12 @@ async function sendCommand(command) {
     return;
   }
 
-  // Add the selected suffix, for example a newline, if the device expects it
-  const payload = `${command}${decodeSuffix(commandSuffixInput.value)}`;
-
   try {
     // Convert the command to bytes and send it over Bluetooth
-    await writeCharacteristic.writeValue(encoder.encode(payload));
+    await writeCharacteristic.writeValue(encoder.encode(command));
 
     lastCommand.textContent = `Last command: ${command}`;
-    addLog(`Sent: ${JSON.stringify(payload)}`);
+    addLog(`Sent: ${JSON.stringify(command)}`);
   } catch (error) {
     setStatus(error.message || "Failed to send command.", false);
     addLog(`Send failed: ${command}`);
